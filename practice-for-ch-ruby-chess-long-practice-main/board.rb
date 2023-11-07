@@ -1,16 +1,16 @@
 require_relative "piece"
 
 class Board
-
+    attr_reader :rows
     def initialize
         @rows = Array.new(8) { Array.new(8) }
         self.initialize_pieces
-    end 
+    end
 
     def [](pos)
         x, y = pos
         @rows[x][y]
-    end 
+    end
 
     def []=(pos, val)
         x, y = pos
@@ -18,17 +18,18 @@ class Board
     end
 
     def move_piece(start_pos, end_pos)
-        if @board[start_pos] == nil
-            raise "THERE IS NO PIECE AT START POSITION!!!"
-        end
+        #make sure to edit piece position after moving
+        x, y = end_pos
+        raise "THERE IS NO PIECE AT START POSITION!!!" if self[start_pos] == nil
+        raise "NOT VALID POSITION, OUT OF BOUNDS!!!!" if (x < 0 || x > 7) || (y < 0 || y > 7)
     end
 
     private
 
     def initialize_pieces
-        rows.each_with_index do |row, row_i|
+        @rows.each_with_index do |row, row_i|
             row.each_index do |col_i|
-                if row <= 1 || row >= 6 #where pieces occupy board
+                if row_i <= 1 || row_i >= 6 #where pieces occupy board
                     @rows[row_i][col_i] = Piece.new
                 else
                     @rows[row_i][col_i] = nil
