@@ -4,12 +4,23 @@ require_relative 'stepable'
 class King < Piece
 include Stepable
 
-def symbol
+  def symbol
+    '♚'.colorize(color)
+  end
 
-end
+  protected 
 
-def move_diffs
-  #return possible moves
-end
+  def move_dirs
+    [
+      [0, 1],
+      [1, 0],
+      [0, -1],
+      [-1, 0],
+      [1, 1],
+      [-1, -1],
+      [-1, 1],
+      [1, -1]
+    ]
+  end
 
 end
