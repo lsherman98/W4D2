@@ -2,40 +2,64 @@ require_relative "piece"
 
 class Board
     attr_reader :rows
-    def initialize
-        @rows = Array.new(8) { Array.new(8) }
-        self.initialize_pieces
+    def initialize(fill_board = true)
+
+        make_starting_grid(fill_board)
     end
 
     def [](pos)
-        x, y = pos
-        @rows[x][y]
+        raise 'invalid position' unless valid_position?(pos)
+
+        row, col = pos
+        @rows[row][col]
     end
 
-    def []=(pos, val)
-        x, y = pos
-        @rows[x][y] = val
+    def []=(pos, piece)
+        raise 'invalid position' unless valid_position?(pos)
+
+        row, col = pos
+        @rows[row][row] = piece
     end
 
     def move_piece(start_pos, end_pos)
         #make sure to edit piece position after moving
-        x, y = end_pos
-        raise "THERE IS NO PIECE AT START POSITION!!!" if self[start_pos] == nil
-        raise "NOT VALID POSITION, OUT OF BOUNDS!!!!" if (x < 0 || x > 7) || (y < 0 || y > 7)
+        raise "Position is not empty" unless empty?(start_pos)
+        raise 'invalid position' unless valid_position?(end_pos)
     end
 
     private
 
-    def initialize_pieces
-        @rows.each_with_index do |row, row_i|
-            row.each_index do |col_i|
-                if row_i <= 1 || row_i >= 6 #where pieces occupy board
-                    @rows[row_i][col_i] = Piece.new
-                else
-                    @rows[row_i][col_i] = nil
-                end
-            end
+    def empty?(pos)
+        self[pos].empty?
+    end
+
+    def valid_position?(pos)
+        pos.all? {|coordinate| coordinate.between?(0,7)}
+    end
+
+    def make_starting_grid(fill_board)
+        @rows = Array.new(8) { Array.new(8) }
+        return unless fill_board
+        [:white, :black].each do |color|
+            fill_back_row(color)
+            fill_front_row(color)
         end
+
+    end
+
+    def fill_back_row(color)
+        back_pieces = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
+        i = color == :white ? 7 : 0
+        back_pieces.each_with_index do |piece, j|
+            piece.new(color, self, [i, j])
+        end
+    end
+
+    def fill_front_row(color)
+        front_pieces = [Pawn, Pawn, Pawn, Pawn, Pawn, Pawn, Pawn, Pawn]
+        i = color == :white ? 6 : 1
+        front_pieces.each_with_index do |piece, j|
+            piece.new(color, self, [i, j])
     end
 
 end
