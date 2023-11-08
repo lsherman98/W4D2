@@ -25,6 +25,9 @@ class Board
         #make sure to edit piece position after moving
         raise "Position is not empty" unless empty?(start_pos)
         raise 'invalid position' unless valid_position?(end_pos)
+        #the current piece that we want to move, will be set to end_pos
+        piece_to_move = self.board[start_pos]
+        piece_to_move.pos = end_pos
     end
 
     private

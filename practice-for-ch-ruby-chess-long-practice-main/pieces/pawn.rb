@@ -2,7 +2,7 @@ require_relative 'piece'
 
 class Pawn < Piece
   def symbol
-    
+    '♟︎'.colorize(color)
   end
 
   def moves
@@ -14,7 +14,8 @@ class Pawn < Piece
 
       next unless board.valid_position?(new_pos)
       if (dx == 2 || dx == -2) && board.empty?([cur_x + dx - 1, cur_y]) && board.empty?([cur_x + dx, cur_y]) && at_start_row?(cur_x)
-        possible_moves << new_pos
+        possible_moves << new_pos 
+        next 
       end
 
       if forward?(move_delta)
@@ -24,8 +25,6 @@ class Pawn < Piece
       end
     end
   end
-
-
 
   def at_start_row?(row)
     return true if row == 1 || row == 6

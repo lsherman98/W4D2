@@ -8,11 +8,14 @@ class NullPiece < Piece
   end
 
   def symbol
-
+    'X'
   end
 
   def color
     @color
   end
 
+  def moves
+    []  
+  end
 end

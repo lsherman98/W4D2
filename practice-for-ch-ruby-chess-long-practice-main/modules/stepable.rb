@@ -33,5 +33,4 @@ module Stepable #knight, king
       raise NotImplementedError
     end
 
-
 end
