@@ -1,17 +1,17 @@
 require_relative 'piece'
-require_relative 'slideable'
+require_relative '../modules/slideable_module'
 
 class Queen < Piece
   include Slideable
 
   def symbol
-    '♛'.colorize(color)
+    '♛' #.colorize(color)
   end
 
   protected
   def move_dirs
     #return directions a queen can move
     #horizontal, vertical, and diagnol
-    horizontal__and_vertical_dirs + diagonal_dirs
+    horizontal_and_vertical_dirs + diagonal_dirs
   end
 end

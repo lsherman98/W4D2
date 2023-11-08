@@ -1,11 +1,11 @@
 require_relative 'piece'
-require_relative 'slideable'
+require_relative '../modules/slideable_module.rb'
 
 class Bishop < Piece
   include Slideable
 
   def symbol
-    '♝'.colorize(color)
+    '♝' #.colorize(color)
   end
 
   protected

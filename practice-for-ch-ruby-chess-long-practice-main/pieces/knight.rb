@@ -1,16 +1,16 @@
 require_relative 'piece'
-require_relative 'stepable'
+require_relative '../modules/stepable'
 
 class Knight < Piece
 include Stepable
 
     def symbol
-        '♞'.colorize(color)
+        '♞' #.colorize(color)
     end
 
     protected
 
-    def move_dirs 
+    def move_dirs
         [
             [-2, -1],
             [-2, 1],

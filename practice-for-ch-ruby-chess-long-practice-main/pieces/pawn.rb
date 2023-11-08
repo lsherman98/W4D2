@@ -1,8 +1,10 @@
 require_relative 'piece'
+require "byebug"
+
 
 class Pawn < Piece
   def symbol
-    '♟︎'.colorize(color)
+    '♟︎' #.colorize(color)
   end
 
   def moves
@@ -12,10 +14,11 @@ class Pawn < Piece
       dx, dy = move_delta
       new_pos = [cur_x + dx, cur_y + dy]
 
+      # debugger
       next unless board.valid_position?(new_pos)
       if (dx == 2 || dx == -2) && board.empty?([cur_x + dx - 1, cur_y]) && board.empty?([cur_x + dx, cur_y]) && at_start_row?(cur_x)
-        possible_moves << new_pos 
-        next 
+        possible_moves << new_pos
+        next
       end
 
       if forward?(move_delta)
@@ -24,6 +27,7 @@ class Pawn < Piece
         possible_moves << new_pos if !board.empty?(new_pos) && side_attack(new_pos)
       end
     end
+    possible_moves
   end
 
   def at_start_row?(row)

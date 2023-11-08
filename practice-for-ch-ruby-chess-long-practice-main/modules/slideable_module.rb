@@ -13,7 +13,7 @@ module Slideable
         [-1, 1]
 ].freeze
 
-    def horizontal__and_vertical_dirs
+    def horizontal_and_vertical_dirs
         HORIZONTAL_AND_VERTICAL_DIRS
     end
 
@@ -35,12 +35,12 @@ module Slideable
     end
 
     #only collects moves in one direction
-    def grow_unblocked_moves_in_dir(dx, dy) #dx starts:[0,1] 
+    def grow_unblocked_moves_in_dir(dx, dy) #dx/dy starts:[1, 0]
         moves_in_dir = []
-        cur_row, cur_col = self.pos         #begin at [0,0]
+        cur_row, cur_col = self.pos         #begin at [0, 4]
 
         while true
-            new_pos = [cur_row += dx, cur_col += dy]          #new_pos: [0,1]
+            new_pos = [cur_row += dx, cur_col += dy]          #new_pos: [2,4]
             break unless self.board.valid_position?(new_pos)
             if board.empty?(new_pos)
                 moves_in_dir << new_pos
