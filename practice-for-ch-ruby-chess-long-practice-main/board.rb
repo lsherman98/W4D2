@@ -38,7 +38,7 @@ class Board
     end
 
     def make_starting_grid(fill_board)
-        @rows = Array.new(8) { Array.new(8) {nil} }
+        @rows = Array.new(8) { Array.new(8) {NullPiece.new} }
         return unless fill_board
         [:white, :black].each do |color|
             fill_back_row(color)
