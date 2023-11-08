@@ -18,7 +18,7 @@ class Board
         raise 'invalid position' unless valid_position?(pos)
 
         row, col = pos
-        @rows[row][row] = piece
+        @rows[row][col] = piece
     end
 
     def move_piece(start_pos, end_pos)
@@ -38,7 +38,7 @@ class Board
     end
 
     def make_starting_grid(fill_board)
-        @rows = Array.new(8) { Array.new(8) }
+        @rows = Array.new(8) { Array.new(8) {nil} }
         return unless fill_board
         [:white, :black].each do |color|
             fill_back_row(color)
@@ -51,7 +51,8 @@ class Board
         back_pieces = [Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook]
         i = color == :white ? 7 : 0
         back_pieces.each_with_index do |piece, j|
-            piece.new(color, self, [i, j])
+            @rows[[i, j]] = piece.new(color, self, [i, j])
+
         end
     end
 
@@ -59,7 +60,8 @@ class Board
         front_pieces = [Pawn, Pawn, Pawn, Pawn, Pawn, Pawn, Pawn, Pawn]
         i = color == :white ? 6 : 1
         front_pieces.each_with_index do |piece, j|
-            piece.new(color, self, [i, j])
+            @rows[[i, j]] = piece.new(color, self, [i, j])
+        end
     end
 
 end

@@ -5,9 +5,10 @@ class Queen < Piece
   include Slideable
 
   def symbol
-    ''.colorize(color)
+    '♛'.colorize(color)
   end
 
+  protected
   def move_dirs
     #return directions a queen can move
     #horizontal, vertical, and diagnol

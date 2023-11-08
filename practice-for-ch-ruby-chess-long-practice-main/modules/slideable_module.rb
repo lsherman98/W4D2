@@ -23,13 +23,10 @@ module Slideable
 
     def moves
         possible_moves = []
-
-        #iterate over pieces possible directions
-        #use piece subclass move_dirs method and pieces @pos
-        #for each direction collect all possible moves in that direction
-        #add those moves to moves array
-        #use grow unblocked method to loop
-
+        self.move_dirs.each do |move_delta|
+            dx, dy = move_delta
+            possible_moves << grow_unblocked_moves_in_dir(dx, dy)
+        end
         possible_moves
     end
 
@@ -37,9 +34,26 @@ module Slideable
         raise NotImplementedError
     end
 
-    #only colleects moves in one direction
+    #only collects moves in one direction
     def grow_unblocked_moves_in_dir(dx, dy)
+        moves_in_dir = []
+        cur_row, cur_col = self.pos
 
+        while true
+            new_pos = [cur_row + dx, cur_col + dy]
+            break unless self.board.valid_position?(new_pos)
+            if board.empty?(new_pos)
+                moves_in_dir << new_pos
+            else
+                if self.color != self.board[new_pos].color
+                    moves_in_dir << new_pos
+                    break
+                else
+                   break
+                end
+            end
+        end
+        return moves_in_dir
     end
 
 end

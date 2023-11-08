@@ -7,21 +7,21 @@ class Piece
         @pos = pos
     end
 
-    def to_s
-        return self.symbol
-    end
+    # def to_s
+    #     return self.symbol
+    # end
 
     def empty?
         @pos == nil
     end
 
-    def valid_moves
+    # def valid_moves()
 
-    end
+    # end
 
-    def symbol
-        self.symbol
-    end
+    # def symbol
+    #     self.symbol
+    # end
 
     def move_into_check(end_pos)
 
