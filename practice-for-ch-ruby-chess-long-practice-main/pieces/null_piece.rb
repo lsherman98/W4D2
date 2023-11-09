@@ -4,17 +4,14 @@ require "singleton"
 
 class NullPiece < Piece
   include Singleton
-
+  attr_reader :symbol
   def initialize
-    @color = nil
+    @symbol = ' '
+    @color = :none
   end
 
-  def symbol
-    'X'
-  end
-
-  def color
-    @color
+  def empty?
+    true
   end
 
   def moves

@@ -11,7 +11,7 @@ require_relative "./pieces/queen"
 class Board
     attr_reader :rows
     def initialize(fill_board = true)
-
+        @null_piece = NullPiece.instance
         make_starting_grid(fill_board)
     end
 
@@ -38,17 +38,18 @@ class Board
         piece_to_move = self[start_pos]
         if piece_to_move.moves.include?(end_pos)
             self[end_pos] = piece_to_move
-            self[start_pos] = NullPiece.instance
+            self[start_pos] = @null_piece
+            piece_to_move.pos = end_pos
         else
-            p piece_to_move.moves.include?(end_pos)
-            p piece_to_move.moves
             raise "cant do that buddy"
         end
+
+        nil
     end
 
     def print_board
         @rows.each do |row|
-            puts row.map {|piece| piece.symbol.to_s}.join('')
+            puts row.map {|piece| piece.symbol}.join('')
         end
     end
 
@@ -58,13 +59,13 @@ class Board
 
 
     def empty?(pos)
-        self[pos] == NullPiece.instance
+        self[pos].empty?
     end
 
 
     private
     def make_starting_grid(fill_board)
-        @rows = Array.new(8) { Array.new(8) {NullPiece.instance} }
+        @rows = Array.new(8) { Array.new(8, @null_piece)  }
         return unless fill_board
         [:white, :black].each do |color|
             fill_back_row(color)

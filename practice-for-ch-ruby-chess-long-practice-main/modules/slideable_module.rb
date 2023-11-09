@@ -40,7 +40,8 @@ module Slideable
         cur_row, cur_col = self.pos         #begin at [0, 4]
 
         while true
-            new_pos = [cur_row += dx, cur_col += dy]          #new_pos: [2,4]
+            cur_row, cur_col = cur_row + dx, cur_col + dy
+            new_pos = [cur_row, cur_col]          #new_pos: [2,4]
             break unless self.board.valid_position?(new_pos)
             if board.empty?(new_pos)
                 moves_in_dir << new_pos

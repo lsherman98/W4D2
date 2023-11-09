@@ -14,7 +14,7 @@ class Piece
     # end
 
     def empty?
-        @pos == nil
+        false
     end
 
     # def valid_moves()
